@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Validate SVG XML
-        run: xmllint --noout pelican-bicycle.svg
+        run: python3 -c "import xml.etree.ElementTree as ET; ET.parse('pelican-bicycle.svg')"
       - name: Verify responsive SVG metadata
         run: |
           grep -q 'viewBox="0 0 360 640"' pelican-bicycle.svg
