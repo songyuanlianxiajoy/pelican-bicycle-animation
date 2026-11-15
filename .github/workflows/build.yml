@@ -1,0 +1,26 @@
+name: Build SVG
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate SVG XML
+        run: xmllint --noout pelican-bicycle.svg
+      - name: Verify responsive SVG metadata
+        run: |
+          grep -q 'viewBox="0 0 360 640"' pelican-bicycle.svg
+          grep -q 'prefers-reduced-motion' pelican-bicycle.svg
+      - name: Upload SVG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pelican-bicycle-svg
+          path: pelican-bicycle.svg
